@@ -1,4 +1,4 @@
-class DateTime {
+class DateTimeValues {
     constructor(year, month, day, time) {
         this.year = year;
         this.month = month;
@@ -174,9 +174,59 @@ class SkyMap {
         return this.datetime;
     }
 }
-//Example Los Angeles -> Sirius
-let sirius = new CelestialObject(101.52, -16.7424);
-let observer = new ObserverPosition(34.05, -118.24358);
-let datetime = new DateTime(2021.00, 9.00, 4.00, 20.2);
-let skymap = new SkyMap(sirius, observer, datetime);
-console.log(skymap.calculate());
+function get_observerposition_fields() {
+    const lat_field = "lat";
+    const lng_field = "lng";
+    let lat = document.getElementById(lat_field);
+    let lng = document.getElementById(lng_field);
+    return new ObserverPosition(parseFloat(lat.value), parseFloat(lng.value));
+
+}
+function get_ra_dec_fields() {
+    const ra_field = "ra";
+    const dec_field = "dec";
+    let ra = document.getElementById(ra_field);
+    let dec = document.getElementById(dec_field);
+
+    return new CelestialObject(parseFloat(ra.value), parseFloat(dec.value));
+
+
+}
+function get_observation_time() {
+    const datetime_field = "dt";
+    let datetime = document.getElementById(datetime_field).value;
+    if (datetime) {
+        let dt = new Date(datetime);
+
+        let time = dt.getUTCHours() + (dt.getUTCMinutes() / 60);
+        console.log(dt.getUTCDate(), dt.getUTCHours(), time);
+        return new DateTimeValues(parseFloat(dt.getUTCFullYear()), parseFloat(dt.getUTCMonth()), parseFloat(dt.getUTCDate()), parseFloat(time))
+    } else {
+        return new DateTimeValues(0, 0, 0, 0);
+    }
+}
+function calculate_and_display() {
+    //Example Los Angeles -> Sirius
+    const altitude_field = "altitude_field";
+    const azimuth_field = "azimuth_field";
+    let sirius = get_ra_dec_fields();
+    let observer = get_observerposition_fields();
+    //let observer = new ObserverPosition(34.05, -118.24358);
+    let datetime = get_observation_time();
+    console.log("datetimevalues:", datetime, "observer:", observer, "sirius", sirius);
+    let skymap = new SkyMap(sirius, observer, datetime);
+    let calcresult = skymap.calculate();
+    let az = document.getElementById(azimuth_field);
+    let alt = document.getElementById(altitude_field);
+    az.textContent = "Az = " + calcresult.az + " degrees";
+    alt.textContent = "Alt = " + calcresult.alt + " degrees";
+
+
+}
+
+
+const calculate_button_id = "calculate";
+
+let calculate_button = document.getElementById(calculate_button_id);
+
+calculate_button.addEventListener("click", calculate_and_display, false)

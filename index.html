@@ -1,0 +1,35 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <label for="lat">Lattitude</label>
+    <input type="number" id="lat" name="lattitude" min="-360.000" max="360.000">
+    <label for="lng">Longitude</label>
+    <input type="number" id="lng" name="longitude" min="-360.000" max="360.000">
+    <label for="ra">Right Ascension</label>
+    <input type="number" id="ra" name="right ascension" min="-360.000" max="360.000">
+    <label for="dec">Declination</label>
+    <input type="number" id="dec" name="declination" min="-360.000" max="360.000">
+    <label for="dt">time of observation</label>
+    <input type="datetime-local" id="dt" name="dt">
+
+
+    <h1 id="azimuth_field">
+        azimuth_field
+    </h1>
+    <h1 id="altitude_field">
+        altitude_field
+    </h1>
+    <button id="calculate">calculate</button>
+    <script src="./SkyMap.js">
+
+    </script>
+</body>
+
+</html>
